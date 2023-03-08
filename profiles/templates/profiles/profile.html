@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% block title %}{{ user.username }}{% endblock title %}
+
+{% block body %}
+
+<div class="text-center mb-4">
+    <h3 class="font-light text-4xl text-green-700 w-full">
+        Update profile for {{ user.username }}
+    </h3>
+</div>
+<!-- component from https://tailwindcomponents.com/component/profile-card -->
+<div class="rounded rounded-t-lg overflow-hidden shadow-lg">
+    {% thumbnail user.profile.image_bg "600x240" crop="center" as im %}
+    <img src="{{ im.url }}" class="w-full" />
+    {% endthumbnail %}
+    <div class="flex justify-center -mt-8">
+        {% thumbnail user.profile.image "150x150" crop="center" as im %}
+        <img src="{{ im.url }}" class="rounded-full border-solid border-white border-2 -mt-3">
+        {% endthumbnail %}
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8">
+        {% csrf_token %}
+
+        {{ u_form|crispy }}
+
+        <a href="{% url 'account_change_password' %}"
+            class="change_password bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline inline-block mb-4"">Change password</a>
+
+        {{ p_form|crispy }}
+
+        <div class=" flex items-center justify-between">
+            <button
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Update
+            </button>
+</div>
+
+</form>
+</div>
+{% endblock body %}

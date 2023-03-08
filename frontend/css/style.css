@@ -1,0 +1,106 @@
+.login-form {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-form > h1 {
+    font-size: 2.5rem;
+    margin-bottom: .8rem;
+    color: #047857;
+}
+
+.login-form p {
+    padding: .5rem 0;
+   
+}
+
+.login-form > p {
+    display: none;
+}
+
+.login-form p > a {
+    color: #047857;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.login-form .login label, .login-form .signup label, .login-form .password_reset label, .password_change label {
+    display: inline-block;
+    width: 15%;
+    padding: .5rem 1rem .5rem 0;
+}
+
+.login-form .signup label, .password_change label {
+    min-width: 25%;
+}
+
+.password_change label {
+    min-width: 35%;
+}
+
+.password_change > a {
+    display: inline-block;
+    margin-top: .5rem;
+    opacity: .6;
+}
+
+.login-form .login input, .login-form .signup input, .login-form .password_reset input, .password_change input , #id_password1, #id_password2 {
+    width: 60%;
+    padding: .5rem 1rem;
+    border-radius: 5px; 
+}
+
+.login-form .login input:focus, .login-form .signup input:focus, .login-form .password_reset input:focus, .password_change input:focus , #id_password1:focus, #id_password2:focus {
+    outline-color: #299929;
+}
+
+.login .secondaryAction {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.login .primaryAction, .signup button, .password_change button, .password_reset input[type="submit"], form > input[type="submit"] {
+    display: block;
+    background-color: #047857;
+    color: #eee;
+    border: 1px solid #047857;
+    border-radius: 5px;
+    padding: .8rem .5rem;
+    margin-top: 1rem;
+    min-width: 8rem;
+    outline-color: #047857;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color .5s, box-shadow .5s;
+}
+
+.login .primaryAction:hover, .signup button:hover, .password_change button:hover, .password_reset input[type="submit"]:hover, form > input[type="submit"]:hover {
+    background-color: #299929;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.password_reset input[type="submit"] {
+    width: 10rem;
+    margin: 1rem 0;
+}
+
+.errorlist > li {
+    margin: .2rem 0;
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    border-radius: 5px;
+    padding: .5rem;
+}
+
+.form-message strong {
+    font-size: 1.2rem;
+    color: #047857;
+    margin-bottom: .5rem;
+}
+
+.message-list-item {
+    margin-bottom: .2rem;
+}
+
+p.message {
+    display: block;
+}

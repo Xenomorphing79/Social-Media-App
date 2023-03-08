@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}My friends posts{% endblock %}
+
+{% block body %}
+{% if friend_posts %}
+    <div class="text-center mb-4">
+        <h3 class="font-light text-4xl text-green-700 w-full">
+            {{ user.username }} - Posts by your friends
+        </h3>
+    </div>
+{% endif %}
+<div id="post-container">
+    {% if  friend_posts %}
+        {% for post in friend_posts %}
+            {% include "includes/post.html" with post=post show_detail_link=True %}
+        {% endfor %}
+    {% else %}
+        <div class="text-center mb-4">
+            <h3 class="font-light text-4xl text-green-700 w-full">
+                {{ user.username }}, you do not follow any friends!
+            </h3>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

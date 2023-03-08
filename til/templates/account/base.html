@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% if messages %}
+<div class="form-message">
+    <strong>Messages:</strong>
+    <ul class="message-list">
+        {% for message in messages %}
+        <li class="message-list-item">{{message}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+{% endblock %}

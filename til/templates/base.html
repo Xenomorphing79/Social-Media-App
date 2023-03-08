@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <!-- component  is from https://tailwindcomponents.com/component/sidebar-navigation-->
+
+    <div class="min-h-screen flex flex-row bg-gray-100">
+        <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+            <div class="flex items-center justify-center h-20 shadow-md">
+                <h1 class="text-3xl uppercase text-green-700 font-semibold">TIL</h1>
+            </div>
+            <ul class="flex flex-col py-4">
+                <li>
+                    <a href="/"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class="bx bx-home"></i></span>
+                        <span class="text-sm font-medium">Home</span>
+                    </a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'feed:friends_posts' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class='bx bx-comment-detail'></i></span>
+                        <span class="text-sm font-medium">Friends posts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'feed:my_posts' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class='bx bxl-firebase'></i></span>
+                        <span class="text-sm font-medium">My posts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'feed:new_post' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800 js-toggle-modal">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class='bx bxs-message-add'></i></span>
+                        <span class="text-sm font-medium">New Post</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'profile' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class='bx bxs-user-detail'></i></span>
+                        <span class="text-sm font-medium">Edit profile</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_logout' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class="bx bx-log-out"></i></span>
+                        <span class="text-sm font-medium">Logout</span>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'account_signup' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class='bx bxs-user-plus'></i></span>
+                        <span class="text-sm font-medium">Register</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_login' %}"
+                        class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                        <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
+                                class="bx bx-log-in"></i></span>
+                        <span class="text-sm font-medium">Login</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="py-10 px-16 w-3/5 login-form">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="bg-green-100 border-t-4 border-green-500 rounded-b text-green-900 px-4 py-3 shadow-md mb-2"
+                role="alert">
+                <div class="flex">
+                    <div class="py-1"><svg class="fill-current h-6 w-6 text-green-500 mr-4"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
+                        </svg></div>
+                    <div>
+                        <p class="font-bold message message-title">{{ message.tags }}</p>
+                        <p class="text-sm message message-text">{{ message }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% block body %}
+            {% block content %}
+            {% endblock %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- component  is from https://tailwindcomponents.com/component/sidebar-navigation-->
+    {% if request.user.is_authenticated %}
+    <div
+        class="flex items-center justify-center fixed left-0 bottom-0 w-full h-full bg-gray-600 bg-opacity-75 hidden js-modal">
+        <div class="bg-white rounded-lg w-1/2">
+            <div class="flex flex-col items-start p-4">
+                <div class="flex items-center w-full">
+                    <div class="text-green-700 font-medium text-2xl">New post</div>
+                    <svg class="ml-auto fill-current text-gray-700 w-6 h-6 cursor-pointer js-toggle-modal"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                        <path
+                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z" />
+                    </svg>
+                </div>
+                <hr>
+                <div class="w-9/12">
+                    {#TODO: Add the ajax form #}
+                    <textarea cols="10" rows="5"
+                        class="border-2 border-green-700 outline-none rounded-md my-4 js-post-text w-full p-3"
+                        placeholder="Enter your post" maxlength="240"
+                        data-post-url="{% url 'feed:new_post' %}"></textarea>
+                </div>
+                <hr>
+                <div class="ml-auto">
+                    <button
+                        class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-700 hover:border-green-800 hover:bg-green-700 hover:text-white shadow-md py-1 px-3 inline-flex items-center mt-4 js-submit"
+                        type="button">
+                        <span class="mr-2">Create Post</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

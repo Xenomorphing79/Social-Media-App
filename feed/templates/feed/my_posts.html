@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}{{user.username}} - My posts{% endblock %}
+
+{% block body %}
+{% if my_posts %}
+<div class="text-center mb-4">
+    <h3 class="font-light text-4xl text-green-700 w-full">
+        Posts by {{ user.username }}
+    </h3>
+</div>
+{% endif %}
+<div id="post-container">
+    {% if my_posts%}
+    {% for post in my_posts %}
+    {% include "includes/post.html" with post=post show_detail_link=True %}
+    {% endfor %}
+    {% else %}
+    <div class="text-center mb-4">
+        <h3 class="font-light text-4xl text-green-700 w-full">
+            You do not have any posts!
+        </h3>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

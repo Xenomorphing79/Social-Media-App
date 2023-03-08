@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}{{ user.username }}{% endblock title %}
+
+{% block body %}
+<div class="text-center mb-4 ml-20 max-w-lg">
+    <h3 class="font-light text-4xl text-green-700 w-full">
+        Profile details
+    </h3>
+</div>
+<!-- component from https://tailwindcomponents.com/component/profile-card -->
+<div class="rounded rounded-t-lg overflow-hidden shadow-lg max-w-lg my-3 ml-20">
+    {% thumbnail user.profile.image_bg "600x240" crop="center" as im %}
+    <img src="{{ im.url }}" class="w-full" />
+    {% endthumbnail %}
+    <div class="flex justify-center -mt-8">
+        {% thumbnail user.profile.image "150x150" crop="center" as im %}
+        <img src="{{ im.url }}" class="rounded-full border-solid border-white border-2 -mt-3">
+        {% endthumbnail %}
+    </div>
+    <div class="text-center px-3 pb-6 pt-2">
+        <h3
+            class="text-black text-lg font-bold w-11/12 mx-auto border-b border-green-300 rounded-md bg-gray-50 py-3 mb-4">
+            <span class="font-normal">Username:</span>
+            {{ user.username }}
+        </h3>
+        <p
+            class="text-black text-lg font-bold w-11/12 mx-auto border-b border-green-300 rounded-md bg-gray-50 py-3 mb-4 capitalize">
+            <span class="font-normal">First name:</span>
+            {{ user.first_name }}
+        </p>
+        <p
+            class="text-black text-lg font-bold w-11/12 mx-auto border-b border-green-300 rounded-md bg-gray-50 py-3 mb-4 capitalize">
+            <span class="font-normal">Last name:</span>
+            {{ user.last_name }}
+        </p>
+        <p
+            class="text-black text-lg font-bold w-11/12 mx-auto border-b border-green-300 rounded-md bg-gray-50 py-3 mb-4">
+            <span class="font-normal">Email:</span>
+            {{ user.email }}
+        </p>
+        {% if request.user.is_authenticated %}
+        {% if request.user != user %}
+        <div class="mt-3">
+            <button
+                class="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center js-follow"
+                data-username="{{ user.username }}" data-action="{% if you_follow %}un{% endif %}follow"
+                data-url="{% url 'profiles:follow' user.username %}" type="button">
+                <span class="mr-2 js-follow-text">
+                    {% if you_follow %}
+                    Unfollow
+                    {% else %}
+                    Follow
+                    {% endif %}
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                </svg>
+            </button>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="mt-3 text-sm">Login to follow the user</div>
+        {% endif %}
+    </div>
+    <div class="flex justify-center pb-3 text-grey-dark">
+        <div class="text-center mr-3 border-r pr-3 border-green-300">
+            <h2 class="text-base font-bold">{{ total_posts }}</h2>
+            <span>Posts</span>
+        </div>
+        <div class="text-center">
+            <h2 class="text-base font-bold">{{ you_follow_total }}</h2>
+            <span>Friends</span>
+        </div>
+    </div>
+</div>
+{% endblock body %}
